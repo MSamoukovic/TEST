@@ -5,9 +5,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import VueRouter from 'vue-router'
+import VueProps from 'vue-props'
 
 Vue.use(bootstrapVue);
 Vue.use(VueRouter);
+Vue.use(VueProps);
 
 Vue.config.productionTip = false
 
