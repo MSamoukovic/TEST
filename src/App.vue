@@ -1,63 +1,75 @@
 <template>
   <div id="app" class="container">
-    <Create/>
-    <table class="table table-striped">
-    <thead>
+    <div class="row d-flex justify-content-center text-center">
+      <div class="col-8 py-4">
+              <h3>Studenti:</h3>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-8">
+<table class="table table-striped text-center border">
+  <thead>
     <tr>
-      <th>Ime</th>
-      <th>Prezime</th>
+      <th scope="col">Ime</th>
+      <th scope="col">Prezime</th>
+      <th scope="col"></th>
     </tr>
   </thead>
+  <tbody>
     <tr v-for="item in list" v-bind:key="item.Id">
       <td>{{item.FirstName}}</td>
       <td>{{item.LastName}}</td>
       <td>
-        <b-button @click="$bvModal.show(item.Id)">Detalji</b-button>
+        <b-button @click="$bvModal.show('details-'+item.Id)">Detalji</b-button>
+        <b-button class="mx-3">Izmijeni</b-button>
+        <b-button @click="$bvModal.show('delete-'+item.Id)">Ukloni</b-button>
       </td>
 
-<!-- details      -->
-     <b-modal :id =item.Id hide-footer>
-              <div class="container-fluid">
-                <div class="row d-flex justify-content-center">
-                <div class="col-4 border border-secondary">Index:</div>
-                <div class="col-4 border border-secondary">{{item.StudentIdCard}}</div>
-              </div>
-              <div class="row d-flex justify-content-center">
-                <div class="col-4 border border-secondary">Ime:</div>
-                <div class="col-4 border border-secondary">{{item.FirstName}}</div>
-              </div>
-              <div class="row d-flex justify-content-center">
-                <div class="col-4 border border-secondary">Prezime:</div>
-                <div class="col-4 border border-secondary">{{item.LastName}}</div>
-              </div>
-              <div class="row d-flex justify-content-center">
-                <div class="col-4 border border-secondary">Godina:</div>
-                <div class="col-4 border border-secondary">{{item.Year}}</div>
-              </div>
-              <div class="row d-flex justify-content-center">
-                <div class="col-4 border border-secondary">Status:</div>
-                <div class="col-4 border border-secondary">{{item.StudentStatusId}}</div>
-              </div>
-            </div>
-            <b-button class="my-3" block @click="$bvModal.hide(item.Id)">Izađi</b-button>
-</b-modal> 
+      <!-- details      -->
+    <b-modal :id ="'details-'+item.Id" hide-footer>
+      <StudentDetails :item="item"/>
+      <b-button class="my-3" block @click="$bvModal.hide('details-'+item.Id)">Izađi</b-button>
+    </b-modal> 
+
+    <b-modal :id ="'delete-'+item.Id" hide-footer>
+      <StudentDelete :item="item" @submit="$bvModal.hide('delete-'+item.Id)" @cancel="$bvModal.hide('delete-'+item.Id)"/>
+    </b-modal>
+
+    <b-modal :id ="'create'" hide-footer>
+      <StudentCreate />
+    </b-modal> 
     </tr>
-</table> 
-    <Details :listdata="list"/>
+  </tbody>
+</table>
+
+</div>
+</div>
+<div class="row d-flex justify-content-center">
+  <div class="col-8 d-flex">
+      <b-button class="ml-auto" @click="$bvModal.show('create')">Dodaj novog studenta</b-button>
+  </div>
+  </div>
+   <Create/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import Details from './components/Details.vue'
 import Create from './components/Create.vue'
+import StudentDetails from './components/StudentDetails.vue'
+import StudentDelete from './components/StudentDelete.vue'
+import StudentCreate from './components/StudentCreate.vue'
+
+
 
 
 export default {
   name: 'App',
   components: {
-   Details,
-   Create
+   Create,
+   StudentDetails,
+   StudentDelete,
+   StudentCreate
  },
   methods: {
         select: function(event) {
@@ -66,7 +78,7 @@ export default {
     },
      data () {
     return {
-      list: undefined
+      list: undefined,
     }
   },
   mounted () {
@@ -74,12 +86,18 @@ export default {
       .get('https://localhost:44358/api/students')
       .then((resp) => {
         this.list = resp.data;
+        console.log(resp.data);
       })
       .catch(function (error) {
         console.log(error);
       })      
   }
 }
+
+
+
+
+
 </script>
 
 <style scoped>
