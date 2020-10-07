@@ -18,32 +18,32 @@
 import axios from 'axios'
 
 export default {
-        props:[
-            'item'
-        ],
-        methods:{
-            confirm : function(){
+    props:[
+        'item'
+    ],
+    methods:{
+        confirm : function(){
                 axios.delete('https://localhost:44358/api/students/' + this.item.Id)
                 .then((resp) => {
                     this.$emit('submit');
                     console.log(resp.data);
                     axios
-      .get('https://localhost:44358/api/students')
-      .then((resp) => {
-        this.list = resp.data;
-        console.log(resp.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })   
+                    .get('https://localhost:44358/api/students')
+                    .then((resp) => {
+                        this.list = resp.data;
+                        console.log(resp.data);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })   
                 })
                 .catch(function (error) {
                     console.log(error);
                 })   
-            },
-            cancel : function(){
-            this.$emit('cancel') 
-            }
-        }
+        },
+        cancel : function(){
+        this.$emit('cancel') 
     }
+}
+}
 </script>

@@ -7,9 +7,17 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueRouter from 'vue-router'
 import VueProps from 'vue-props'
 
-Vue.use(bootstrapVue);
-Vue.use(VueRouter);
-Vue.use(VueProps);
+Vue.use(bootstrapVue)
+Vue.use(VueRouter)
+Vue.use(VueProps)
+
+
+
+// import VeeValidate from 'vee-validate'
+// Vue.use(VeeValidate)
+
+
+
 
 
 Vue.config.productionTip = false

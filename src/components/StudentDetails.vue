@@ -21,6 +21,16 @@
         <div class="col-5 border border-secondary">Status:</div>
         <div class="col-5 border border-secondary">{{item.StudentStatus}}</div>
       </div>
+       <div class="row d-flex justify-content-center">
+        <div class="col-5 border border-secondary align-middle" >Kursevi:</div>
+        <div class="col-5 border border-secondary">
+          <div class="row">
+            <div class="col-12" v-for="course in item.CoursesList" :key="course">
+              {{course}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
