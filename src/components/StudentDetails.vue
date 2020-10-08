@@ -1,28 +1,51 @@
 <template>
-  <div>
+  <div>     
+
     <div class="container-fluid">
       <div class="row d-flex justify-content-center">
-        <div class="col-5 border border-secondary">Broj indeksa:</div>
-        <div class="col-5 border border-secondary">{{item.StudentIdCard}}</div>
+        <div class="col-5 border border-secondary d-flex">
+          <p class="my-auto">Broj indeksa</p>
+        </div>
+        <div class="col-5 border border-secondary d-flex">
+          <p class="my-auto">{{item.StudentIdCard}}</p>
+        </div>
       </div>
       <div class="row d-flex justify-content-center">
-        <div class="col-5 border border-secondary">Ime:</div>
-        <div class="col-5 border border-secondary">{{item.FirstName}}</div>
+        <div class="col-5 border border-secondary d-flex">
+          <p class="m-0">Ime:</p>
+        </div>
+        <div class="col-5 border border-secondary d-flex">
+          <p class="my-auto">{{item.FirstName}}</p>
+        </div>
       </div>
-      <div class="row d-flex justify-content-center">
-        <div class="col-5 border border-secondary">Prezime:</div>
-        <div class="col-5 border border-secondary">{{item.LastName}}</div>
+      <div class="row d-flex justify-content-center d-flex">
+        <div class="col-5 border border-secondary">
+          <p class="my-auto">Prezime:</p>
+        </div>
+        <div class="col-5 border border-secondary d-flex">
+          <p class="my-auto">{{item.LastName}}</p>
+        </div>
       </div>
-      <div class="row d-flex justify-content-center">
-        <div class="col-5 border border-secondary">Godina:</div>
-        <div class="col-5 border border-secondary">{{item.Year}}</div>
+      <div class="row d-flex justify-content-center d-flex">
+        <div class="col-5 border border-secondary">
+          <p class="my-auto">Godina:</p>
+        </div>
+        <div class="col-5 border border-secondary d-flex">
+          <p class="my-auto">{{item.Year}}</p>
+        </div>
       </div>
-      <div class="row d-flex justify-content-center">
-        <div class="col-5 border border-secondary">Status:</div>
-        <div class="col-5 border border-secondary">{{item.StudentStatus}}</div>
+      <div class="row d-flex justify-content-center d-flex">
+        <div class="col-5 border border-secondary">
+          <p class="my-auto">Status:</p>
+        </div>
+        <div class="col-5 border border-secondary d-flex">
+          <p class="my-auto">{{item.StudentStatus}}</p>
+        </div>
       </div>
-       <div class="row d-flex justify-content-center">
-        <div class="col-5 border border-secondary align-middle" >Kursevi:</div>
+       <div class="row d-flex justify-content-center ">
+        <div class="col-5 border border-secondary d-flex">
+          <p class="my-auto">Kursevi:</p>
+        </div>
         <div class="col-5 border border-secondary">
           <div class="row">
             <div class="col-12" v-for="course in item.CoursesList" :key="course">

@@ -12,16 +12,15 @@
               <td>{{item.FirstName}}</td>
               <td>{{item.LastName}}</td>
               <td>
-                <b-button @click="$bvModal.show('details-'+item.Id)">Detalji</b-button>
-                <b-button class="mx-3">Izmijeni</b-button>
-                <b-button @click="$bvModal.show('delete-'+item.Id)">Ukloni</b-button>
+                <b-button class="bg-white border-primary" @click="$bvModal.show('details-'+item.Id)"><font-awesome-icon icon="info" class="text-primary"/></b-button>
+                <b-button class="bg-white border-success mx-3"><font-awesome-icon icon="pencil-alt" class="text-success"/></b-button>
+                <b-button class="bg-white border-danger" @click="$bvModal.show('delete-'+item.Id)"><font-awesome-icon icon="trash-alt" class="text-danger"/></b-button>
               </td>
               <b-modal :id ="'details-'+item.Id" hide-footer>
                 <template v-slot:modal-title>
                 <!-- Detalji -->
               </template>
                 <StudentDetails :item="item"/>
-                <b-button class="my-3" block @click="$bvModal.hide('details-'+item.Id)">Izađi</b-button>
               </b-modal> 
 
               <b-modal :id ="'delete-'+item.Id" hide-footer>

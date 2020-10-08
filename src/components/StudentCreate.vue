@@ -2,7 +2,6 @@
   <div>
     <b-button @click="$bvModal.show('add')">Dodaj novog studenta</b-button>
     <b-modal :id ="'add'" hide-footer >
-
     <form>
       <div class="form-group">
         <label>Broj indeksa:</label>
@@ -28,19 +27,27 @@
                   {{status.Name}}
               </option>
           </select>
-        </div>
-  </form>
+      </div>
+        <div class="form-group">
+        <label>Kursevi:</label>
+          <select class="form-control" v-model="student.CoursesList" >
+            <option v-for="course in courses" v-bind:key="course.Name" v-bind:value="course.Name" >
+                  {{course.Name}}
+              </option>
+          </select>
+      </div>  
 
-    <div class="container">
-      <div class="row d-flex justify-content-end">
-        <div class="col-3">
-          <b-button class="my-3 w-100" type="submit" @click="submitData">Da</b-button>
+  </form>
+     <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-5 ">
+          <b-button class="my-3 w-100 border-danger bg-white text-danger font-weight-bold" type="submit" @click="submitData">Da</b-button>
         </div>
-        <div class="col-2">
-          <b-button class="my-3" block @click="$bvModal.hide('add')">Ne</b-button>
+        <div class="col-5">
+          <b-button class="my-3 bg-white border-success text-success font-weight-bold" block @click="$bvModal.hide('add')">Ne</b-button>
         </div>
       </div>
-    </div>
+    </div> 
     </b-modal>  
   </div>
 </template>
@@ -58,20 +65,25 @@ export default {
             FirstName : null,
             LastName : null,
             Year : null,
-            StudentStatus: 'Redovan'
+            StudentStatus: null,
+            CoursesList : []
             },
-            studentStatusList:null
+            studentStatusList:null,
+            courses : null
+            
         }
     },
     methods:{
         submitData(e){
+          console.log("majaa");
+          console.log(this.student);
             axios.post('https://localhost:44358/api/students', this.student)
             .then((result)=>{
                 console.log(result);
+
                 this.$emit('submit');
             })
             e.preventDefault();
-            console.log(this.student);
         },
         
     },
@@ -80,7 +92,14 @@ export default {
       .get('https://localhost:44358/api/studentStatus')
       .then((resp) => {
         this.studentStatusList = resp.data;
-        console.log(resp.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      }),
+       axios
+      .get('https://localhost:44358/api/courses')
+      .then((resp) => {
+        this.courses = resp.data;
       })
       .catch(function (error) {
         console.log(error);

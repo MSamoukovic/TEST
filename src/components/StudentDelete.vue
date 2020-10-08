@@ -4,10 +4,10 @@
             <h4 class="text-center">Da li ste sigurni ?</h4>
             <div class="row d-flex justify-content-center">
                 <div class="col-5">
-                    <b-button class="my-3" block @click="confirm()">Da</b-button>
+                    <b-button class="my-3 font-weight-bold border-danger bg-white text-danger" block @click="confirm()">Da</b-button>
                 </div>
                 <div class="col-5">
-                    <b-button class="my-3" block @click="cancel()">Ne</b-button>
+                    <b-button class="my-3 font-weight-bold border-success bg-white text-success" block @click="cancel()">Ne</b-button>
                 </div>
             </div>
         </div>
