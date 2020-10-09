@@ -34,17 +34,23 @@ export default {
             }
         }
     },
+    props:[
+        'coursesList'
+    ],
     methods:{
         addNewCourse(){
             axios.post('https://localhost:44358/api/courses', this.course)
                 .then((result)=>{
                     console.log(result);
                     this.$emit('submit');
+                    this.coursesList.push({
+                        Name: this.course.Name
+                    });                
                 })
                .catch(function (error) {
                 console.log(error);
                 })   
-        }
+        }             
     }
 }
 </script>

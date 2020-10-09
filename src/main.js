@@ -7,13 +7,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTrashAlt, faEdit, faPencilAlt, faInfo, faInfoCircle, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt, faEdit, faPencilAlt, faInfo, faInfoCircle, faUsers, faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 Vue.use(bootstrapVue)
 Vue.use(VueProps)
 
-library.add(faTrashAlt, faEdit, faPencilAlt, faInfo, faInfoCircle, faUsers)
+library.add(faTrashAlt, faEdit, faPencilAlt, faInfo, faInfoCircle, faUsers, faUserPlus)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

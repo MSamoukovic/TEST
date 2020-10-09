@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button @click="$bvModal.show('add')">Dodaj novog studenta</b-button>
+    <b-button @click="$bvModal.show('add')">Dodaj novog studenta <font-awesome-icon icon="user-plus" class=""/></b-button>
     <b-modal :id ="'add'" hide-footer >
     <form>
       <div class="form-group">
@@ -77,19 +77,30 @@ export default {
             
         }
     },
+    props:[
+      'studentList'
+    ],
     methods:{
         submitData(e){
           console.log(this.student);
             axios.post('https://localhost:44358/api/students', this.student)
             .then((result)=>{
                 console.log(result);
+                this.studentList.push({
+                  StudentIdCard : this.student.StudentIdCard,
+                  FirstName : this.student.FirstName,
+                  LastName : this.student.LastName,
+                  Year : this.student.Year,
+                  StudentStatus: this.student.StudentStatus,
+                  CoursesList : this.student.CoursesList
+                });
 
                 this.$emit('submit');
             })
             e.preventDefault();
         }
     },
-     mounted () {
+    mounted () {
     axios
       .get('https://localhost:44358/api/studentStatus')
       .then((resp) => {

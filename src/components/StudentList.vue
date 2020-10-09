@@ -1,4 +1,7 @@
 <template>
+<div>
+<div class="row d-flex justify-content-center">
+  <div class="col-8">
     <table class="table table-striped text-center border">
           <thead>
             <tr>
@@ -29,6 +32,14 @@
             </tr>
           </tbody>
         </table>
+        </div>
+        </div>
+<div class="row d-flex justify-content-center">
+      <div class="col-8 d-flex d-flex">
+        <StudentCreate @submit="$bvModal.hide('add')" class="ml-auto" :studentList="list"/>
+      </div>
+    </div>
+    </div>
 </template>
 
 
@@ -36,12 +47,15 @@
 import axios from 'axios'
 import StudentDetails from './StudentDetails.vue'
 import StudentDelete from './StudentDelete.vue'
+import StudentCreate from './StudentCreate.vue'
+
 
 export default {
     name: 'App',
     components: {
         StudentDetails,
-        StudentDelete
+        StudentDelete,
+        StudentCreate
     },
     methods: {
         select: function(event) {

@@ -2,7 +2,7 @@
     <div>
         <b-button @click="$bvModal.show('courses')" class="my-3">Kurs</b-button>
         <b-modal :id ="'courses'" hide-footer > 
-            <CourseCreate @submit="$bvModal.hide('addCourse')"/>
+            <CourseCreate @submit="$bvModal.hide('addCourse')" :coursesList="coursesList"/>
             <table class="table table-striped text-center border">
                 <thead>
                     <tr>
@@ -14,7 +14,7 @@
                     <tr v-for="course in coursesList" v-bind:key="course.Id">
                         <td>{{course.Name}}</td>
                         <td> 
-                            <b-button class="bg-white border-primary" @click="$bvModal.show('students-' +course.Id );getStudents(course.Id)"><font-awesome-icon icon="users" class="text-primary"/></b-button>
+                            <b-button class="bg-white border-primary" @click="$bvModal.show('students-'+course.Id );getStudents(course.Id)"><font-awesome-icon icon="users" class="text-primary"/></b-button>
                             <b-modal :id ="'students-'+course.Id" hide-footer >
                                 <template v-slot:modal-title>
                                     {{course.Name}}
@@ -22,7 +22,7 @@
                                 <table class="table table-striped text-center border">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Ime</th>
+                                            <th scope="col">Ime </th>
                                             <th scope="col">Prezime</th>
                                             <th scope="col">Broj indeksa</th>
                                         </tr>

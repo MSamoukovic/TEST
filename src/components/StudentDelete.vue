@@ -25,8 +25,8 @@ export default {
         confirm : function(){
                 axios.delete('https://localhost:44358/api/students/' + this.item.Id)
                 .then((resp) => {
-                    this.$emit('submit');
                     console.log(resp.data);
+                    this.$emit('submit');
                     this.list.splice(this.index,1);
                 })
                 .catch(function (error) {
@@ -35,7 +35,7 @@ export default {
         },
         cancel : function(){
         this.$emit('cancel') 
+        }
     }
-}
 }
 </script>
