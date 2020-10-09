@@ -10,7 +10,7 @@
       </div>
       <div class="form-group">
         <label>Ime:</label>
-        <input type="text" class="form-control" name="FirstName" id="FirstName" v-model="student.FirstName" >
+        <input type="text" class="form-control" name="FirstName" id="FirstName" v-model="student.FirstName">
       </div>
       <div class="form-group">
         <label>Prezime:</label>
@@ -30,11 +30,11 @@
       </div>
         <div class="form-group">
         <label>Kursevi:</label>
-          <select class="form-control" v-model="student.CoursesList" >
+          <select class="form-control selectpicker" v-model="student.CoursesList" multiple>
             <option v-for="course in courses" v-bind:key="course.Name" v-bind:value="course.Name" >
                   {{course.Name}}
               </option>
-          </select>
+          </select> 
       </div>  
 
   </form>
@@ -54,6 +54,10 @@
 
 <script>
 import axios from 'axios'
+
+// import VeeValidate from 'vee-validate'
+// Vue.use(VeeValidate);
+
 
 export default {
     name:'StudentCreate',
@@ -75,7 +79,6 @@ export default {
     },
     methods:{
         submitData(e){
-          console.log("majaa");
           console.log(this.student);
             axios.post('https://localhost:44358/api/students', this.student)
             .then((result)=>{
@@ -84,8 +87,7 @@ export default {
                 this.$emit('submit');
             })
             e.preventDefault();
-        },
-        
+        }
     },
      mounted () {
     axios

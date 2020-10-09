@@ -19,7 +19,7 @@ import axios from 'axios'
 
 export default {
     props:[
-        'item'
+        'item','index','list'
     ],
     methods:{
         confirm : function(){
@@ -27,15 +27,7 @@ export default {
                 .then((resp) => {
                     this.$emit('submit');
                     console.log(resp.data);
-                    axios
-                    .get('https://localhost:44358/api/students')
-                    .then((resp) => {
-                        this.list = resp.data;
-                        console.log(resp.data);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })   
+                    this.list.splice(this.index,1);
                 })
                 .catch(function (error) {
                     console.log(error);

@@ -8,13 +8,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in list" v-bind:key="item.Id">
+            <tr v-for="(item,index) in list" v-bind:key="item.Id" v-bind:index ="index">
               <td>{{item.FirstName}}</td>
               <td>{{item.LastName}}</td>
               <td>
                 <b-button class="bg-white border-primary" @click="$bvModal.show('details-'+item.Id)"><font-awesome-icon icon="info" class="text-primary"/></b-button>
                 <b-button class="bg-white border-success mx-3"><font-awesome-icon icon="pencil-alt" class="text-success"/></b-button>
-                <b-button class="bg-white border-danger" @click="$bvModal.show('delete-'+item.Id)"><font-awesome-icon icon="trash-alt" class="text-danger"/></b-button>
+                <b-button class="bg-white border-danger" @click="$bvModal.show(index+'delete-'+item.Id)"><font-awesome-icon icon="trash-alt" class="text-danger"/></b-button>
               </td>
               <b-modal :id ="'details-'+item.Id" hide-footer>
                 <template v-slot:modal-title>
@@ -23,8 +23,8 @@
                 <StudentDetails :item="item"/>
               </b-modal> 
 
-              <b-modal :id ="'delete-'+item.Id" hide-footer>
-                <StudentDelete :item="item" @submit="$bvModal.hide('delete-'+item.Id)" @cancel="$bvModal.hide('delete-'+item.Id)"/>
+              <b-modal :id ="index+'delete-'+item.Id" hide-footer>
+                <StudentDelete :item="item" :index="index" :list="list" @submit="$bvModal.hide(index+'delete-'+item.Id)" @cancel="$bvModal.hide(index+'delete-'+item.Id)"/>
               </b-modal>
             </tr>
           </tbody>

@@ -16,12 +16,8 @@ Vue.use(VueProps)
 library.add(faTrashAlt, faEdit, faPencilAlt, faInfo, faInfoCircle, faUsers)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-// import VeeValidate from 'vee-validate'
-// Vue.use(VeeValidate)
-
 Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
 }).$mount('#app')
-
