@@ -1,22 +1,20 @@
 <template>
 <div>
 <div class="row d-flex justify-content-center">
-  <div class="col-8">
+  <div class="col-12 col-lg-8">
     <table class="table table-striped text-center border">
           <thead>
             <tr>
-              <th scope="col">Ime</th>
-              <th scope="col">Prezime</th>
+              <th scope="col">Broj indeksa</th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item,index) in list" v-bind:key="item.Id" v-bind:index ="index">
-              <td>{{item.FirstName}}</td>
-              <td>{{item.LastName}}</td>
+              <td>{{item.StudentIdCard}}</td>
               <td>
                 <b-button class="bg-white border-primary" @click="$bvModal.show('details-'+item.Id)"><font-awesome-icon icon="info" class="text-primary"/></b-button>
-                <b-button class="bg-white border-success mx-3"><font-awesome-icon icon="pencil-alt" class="text-success"/></b-button>
+                <b-button class="bg-white border-success mx-3" @click="$bvModal.show('add')"><font-awesome-icon icon="pencil-alt" class="text-success"/></b-button>
                 <b-button class="bg-white border-danger" @click="$bvModal.show(index+'delete-'+item.Id)"><font-awesome-icon icon="trash-alt" class="text-danger"/></b-button>
               </td>
               <b-modal :id ="'details-'+item.Id" hide-footer>
@@ -35,7 +33,7 @@
         </div>
         </div>
 <div class="row d-flex justify-content-center">
-      <div class="col-8 d-flex d-flex">
+      <div class="col-12 col-lg-8 d-flex d-flex">
         <StudentCreate @submit="$bvModal.hide('add')" class="ml-auto" :studentList="list"/>
       </div>
     </div>
@@ -48,6 +46,7 @@ import axios from 'axios'
 import StudentDetails from './StudentDetails.vue'
 import StudentDelete from './StudentDelete.vue'
 import StudentCreate from './StudentCreate.vue'
+
 
 
 export default {

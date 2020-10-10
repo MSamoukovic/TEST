@@ -5,20 +5,26 @@
         <b-button size="sm" class="mb-3 bg-white border-danger text-danger"  @click="$bvModal.show('addCourse')">Dodaj</b-button>
         </div>
         <b-modal :id ="'addCourse'" hide-footer >
-            <form>
-                <div class="form-group mb-4">
-                    <label>Naziv kursa:</label>
-                    <input type="text" class="form-control" name="Name" id="Name" v-model="course.Name">
+           <template v-slot:modal-title>
+               Novi kurs:
+            </template> 
+            <form @submit.prevent="handleSubmit">
+                <div class="form-group">
+                    <label for="Name">Naziv:</label>
+                    <input type="text" v-model="course.Name" v-validate="'required'" id="Name" name="Name" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Name') }" />
+                    <div v-if="submitted && errors.has('Name')" class="invalid-feedback">Unesite naziv kursa</div>
+                </div>
+                <div class="form-group">
+                    <div class="row d-flex justify-content-center my-3">
+                        <div class="col-5">
+                            <b-button class="w-100 bg-white border-danger text-danger font-weight-bold" type="submit">Da</b-button>
+                        </div>
+                        <div class="col-5">
+                            <b-button class="w-100 bg-white border-success text-success font-weight-bold" @click="$bvModal.hide('addCourse');resetField();">Ne</b-button>
+                        </div>
+                    </div> 
                 </div>
             </form>
-            <div class="row d-flex justify-content-center my-3">
-                <div class="col-5">
-                    <b-button class="w-100 bg-white border-danger text-danger font-weight-bold" type="submit" @click="addNewCourse">Da</b-button>
-                </div>
-                <div class="col-5">
-                    <b-button class="w-100 bg-white border-success text-success font-weight-bold"  @click="$bvModal.hide('addCourse')">Ne</b-button>
-                </div>
-            </div>
         </b-modal>
     </div>
 </template>
@@ -31,13 +37,17 @@ export default {
         return{
             course:{
                 Name: null
-            }
+            },        
+            submitted: false
         }
     },
     props:[
         'coursesList'
     ],
     methods:{
+        resetField(){
+            this.course.Name = '';
+        },
         addNewCourse(){
             axios.post('https://localhost:44358/api/courses', this.course)
                 .then((result)=>{
@@ -45,12 +55,21 @@ export default {
                     this.$emit('submit');
                     this.coursesList.push({
                         Name: this.course.Name
-                    });                
+                    });
+                    this.resetField();
                 })
                .catch(function (error) {
                 console.log(error);
                 })   
-        }             
+        },
+        handleSubmit(){
+            this.submitted = true;
+            this.$validator.validate().then(valid => {
+                if (valid) {
+                    this.addNewCourse();
+                }
+            });
+        }
     }
 }
 </script>

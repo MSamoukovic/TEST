@@ -30,6 +30,7 @@ export default {
                     this.list.splice(this.index,1);
                 })
                 .catch(function (error) {
+                    console.log(this.item);
                     console.log(error);
                 })   
         },
