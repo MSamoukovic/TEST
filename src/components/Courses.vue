@@ -1,7 +1,8 @@
 <template>
+<div>
 <div class="row d-flex justify-content-center">
       <div class="col-12 col-lg-8 d-flex">        
-          <b-button @click="$bvModal.show('courses')" class="my-3 ml-auto">Kurs</b-button>
+          <b-button @click="$bvModal.show('courses')" class="my-3">Kurs</b-button>
         <b-modal :id ="'courses'" hide-footer > 
             <CourseCreate @submit="$bvModal.hide('addCourse')" :coursesList="coursesList"/>
             <table class="table table-striped text-center border">
@@ -42,6 +43,7 @@
                 </tbody>
             </table>
         </b-modal>
+    </div>
     </div>
     </div>
 </template>

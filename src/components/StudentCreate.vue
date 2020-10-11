@@ -1,8 +1,13 @@
 <template>
   <div>
-    <b-button @click="$bvModal.show('add')">Dodaj novog studenta <font-awesome-icon icon="user-plus" class=""/></b-button>
     <b-modal :id ="'add'" hide-footer >
-    <form @submit.prevent="handleSubmit">
+      <template v-slot:modal-title v-if="isEdit">
+         Izmijeni
+      </template>
+     <template v-slot:modal-title v-else>
+         Dodaj
+      </template>
+    <form @submit.prevent="handleSubmit" v-if="!isEdit">
       <div class="form-group">
         <label for="StudentIdCard">Broj indeksa:</label>
         <input type="text" class="form-control" name="StudentIdCard" id="StudentIdCard" v-model="student.StudentIdCard" v-validate="'required'" :class="{ 'is-invalid': submitted && errors.has('StudentIdCard') }" >
@@ -47,6 +52,52 @@
       </div> 
     </div>
   </form>
+  <form @submit.prevent="handleSubmit" v-else>
+      <div class="form-group">
+        <label for="StudentIdCard">Broj indeksa:</label>
+        <input type="text" class="form-control" name="StudentIdCard" id="StudentIdCard" v-model="editItem.StudentIdCard" v-validate="'required'" :class="{ 'is-invalid': submitted && errors.has('StudentIdCard') }" >
+      <div v-if="submitted && errors.has('StudentIdCard')" class="invalid-feedback">Unesite broj indeksa</div>
+      </div>
+      <div class="form-group">
+        <label>Ime:</label>
+        <input type="text" class="form-control" name="FirstName" id="FirstName" v-model="editItem.FirstName">
+      </div>
+      <div class="form-group">
+        <label>Prezime:</label>
+        <input type="text" class="form-control" name="LastName" id="LastName" v-model="editItem.LastName">
+      </div>
+      <div class="form-group">
+        <label>Godina:</label>
+        <input type="number" class="form-control" name="Year" id="Year" min="1" max="6" v-model="editItem.Year" onKeyDown="return false">
+      </div>
+      <div class="form-group">
+        <label>Status:</label>
+          <select class="form-control" v-model="editItem.StudentStatus">
+            <option v-for="status in studentStatusList" v-bind:key="status.Id" v-bind:value="status.Name"  >
+                  {{status.Name}}
+              </option>
+          </select>
+      </div>
+        <div class="form-group">
+        <label>Kursevi:</label>
+          <select class="form-control selectpicker" v-model="editItem.CoursesList" multiple>
+            <option  v-for="course in courses" v-bind:key="course.Name" v-bind:value="course.Name" >
+                  {{course.Name}}
+              </option>
+          </select> 
+      </div> 
+    <div class="form-group">
+      <div class="row d-flex justify-content-center my-3">
+          <div class="col-5">
+            <b-button class="my-3 w-100 border-danger bg-white text-danger font-weight-bold" type="submit">Da</b-button>
+          </div>
+          <div class="col-5">
+            <b-button class="my-3 bg-white border-success text-success font-weight-bold" block @click="$bvModal.hide('add');resetFields();">Ne</b-button>
+          </div>
+      </div> 
+    </div>
+  </form>
+
 
   </b-modal>  
   </div>
@@ -78,11 +129,11 @@ export default {
     }
   },
   props:[
-    'studentList'
+    'studentList','isEdit','editItem'
   ],
   mounted () {
     this.getAllStatus(),
-    this.getAllCourses()     
+    this.getAllCourses() 
   },
   methods:{
     resetFields(){
@@ -121,6 +172,16 @@ export default {
         console.log(error);
       }) 
     },
+    updateStudent(){
+      axios.put('https://localhost:44358/api/students/' + this.editItem.Id,this.editItem)
+              .then((result)=>{
+                console.log(result);
+                this.$emit('submit');
+              })
+              .catch(function (error) {
+                console.log(error);
+              })
+    },
     addStudent(){
       axios.post('https://localhost:44358/api/students', this.student)
       .then((result)=>{
@@ -146,10 +207,14 @@ export default {
       this.submitted = true;
       this.$validator.validate().then(valid => {
         if (valid) {
+          if(this.isEdit==false ){
           this.addStudent();
+          }else
+          this.updateStudent();
+
         }
       });
-    }  
+    }
   }
 }
 </script>

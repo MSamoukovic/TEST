@@ -14,7 +14,7 @@
               <td>{{item.StudentIdCard}}</td>
               <td>
                 <b-button class="bg-white border-primary" @click="$bvModal.show('details-'+item.Id)"><font-awesome-icon icon="info" class="text-primary"/></b-button>
-                <b-button class="bg-white border-success mx-3" @click="$bvModal.show('add')"><font-awesome-icon icon="pencil-alt" class="text-success"/></b-button>
+                <b-button class="bg-white border-success mx-3" @click="$bvModal.show('add');checkMethod(item.Id);"><font-awesome-icon icon="pencil-alt" class="text-success"/></b-button>
                 <b-button class="bg-white border-danger" @click="$bvModal.show(index+'delete-'+item.Id)"><font-awesome-icon icon="trash-alt" class="text-danger"/></b-button>
               </td>
               <b-modal :id ="'details-'+item.Id" hide-footer>
@@ -25,21 +25,21 @@
               </b-modal> 
 
               <b-modal :id ="index+'delete-'+item.Id" hide-footer>
-                <StudentDelete :item="item" :index="index" :list="list" @submit="$bvModal.hide(index+'delete-'+item.Id)" @cancel="$bvModal.hide(index+'delete-'+item.Id)"/>
+                <StudentDelete @submit="$bvModal.hide(index+'delete-'+item.Id)" @cancel="$bvModal.hide(index+'delete-'+item.Id)" :item="item" :index="index" :list="list"/>
               </b-modal>
             </tr>
           </tbody>
         </table>
         </div>
         </div>
-<div class="row d-flex justify-content-center">
-      <div class="col-12 col-lg-8 d-flex d-flex">
-        <StudentCreate @submit="$bvModal.hide('add')" class="ml-auto" :studentList="list"/>
-      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-12 col-lg-8 d-flex ">
+          <b-button @click="$bvModal.show('add');checkMethod('add');">Dodaj novog studenta <font-awesome-icon icon="user-plus"/></b-button>
+          <StudentCreate @submit="$bvModal.hide('add')" class="ml-auto" :studentList="list" :isEdit="isEdit" :editItem="editItem"/>
+        </div>
     </div>
-    </div>
+</div>
 </template>
-
 
 <script>
 import axios from 'axios'
@@ -59,11 +59,34 @@ export default {
     methods: {
         select: function(event) {
             console.log(event.target.id); 
+        },
+        checkMethod(elem){
+          if (elem == 'add')
+          {
+            this.isEdit = false;
+            this.editItem = '';
+
+          }
+          else
+          {
+            this.isEdit = true;
+            axios.get('https://localhost:44358/api/students/' + elem)
+            .then((resp) => {
+                this.editItem = resp.data;
+                console.log(resp.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            }) 
+
+          }
         }
     },
     data () {
         return {
             list: undefined,
+            isEdit : false,
+            editItem :''
         }
     },
     mounted () {
