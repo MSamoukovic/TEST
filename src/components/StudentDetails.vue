@@ -42,7 +42,6 @@ export default {
 </script>
 
 <style scoped>
-    .table th, .table td {
-        vertical-align: middle;
-    }
+@import '../assets/styles/tableStyle.css';
 </style>
+

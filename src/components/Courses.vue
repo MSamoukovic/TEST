@@ -2,9 +2,9 @@
 <div>
 <div class="row d-flex justify-content-center">
       <div class="col-12 col-lg-8 d-flex">        
-          <b-button @click="$bvModal.show('courses')" class="my-3">Kurs</b-button>
+          <b-button @click="$bvModal.show('courses');getAllCourses();" class="my-3">Kurs</b-button>
         <b-modal :id ="'courses'" hide-footer > 
-            <CourseCreate @submit="$bvModal.hide('addCourse')" :coursesList="coursesList"/>
+            <CourseCreate @submit="$bvModal.hide('addCourse');getAllCourses()" :coursesList="coursesList"/>
             <table class="table table-striped text-center border">
                 <thead>
                     <tr>
@@ -65,35 +65,34 @@ export default {
         }
         }
     },
+    mounted () {
+    this.getAllCourses();
+    },
     methods:{
+        getAllCourses(){
+        axios
+            .get('https://localhost:44358/api/courses')
+            .then((resp) => {
+                this.coursesList = resp.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        },
         getStudents(courseId){
             axios
                 .get('https://localhost:44358/api/courses/' + courseId )
                 .then((resp) => {
                     this.studentsList = resp.data;
-                    console.log(resp.data);
                 })
                 .catch(function (error) {
                     console.log(error);
                 })  
         }
-    },
-    mounted () {
-    axios
-      .get('https://localhost:44358/api/courses')
-      .then((resp) => {
-        this.coursesList = resp.data;
-        console.log(resp.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-  }
-
     }
+}
 </script>
+
 <style scoped>
-    .table th, .table td {
-        vertical-align: middle;
-    } 
+@import '../assets/styles/tableStyle.css';
 </style>

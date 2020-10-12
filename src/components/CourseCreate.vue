@@ -1,8 +1,7 @@
 <template>
     <div>
-     
         <div class="d-flex justify-content-end">
-        <b-button size="sm" class="mb-3 bg-white border-danger text-danger"  @click="$bvModal.show('addCourse')">Dodaj</b-button>
+            <b-button size="sm" class="mb-3 bg-white border-danger text-danger"  @click="$bvModal.show('addCourse')">Dodaj</b-button>
         </div>
         <b-modal :id ="'addCourse'" hide-footer >
            <template v-slot:modal-title>
@@ -38,24 +37,29 @@ export default {
             course:{
                 Name: null
             },        
-            submitted: false
+            submitted: false,
+            courses : null
         }
     },
-    props:[
-        'coursesList'
-    ],
     methods:{
         resetField(){
             this.course.Name = '';
+        },
+        getAllCourses(){
+            axios.get('https://localhost:44358/api/courses')
+            .then((resp) => {
+            this.courses = resp.data;
+             })
+            .catch(function (error) {
+                console.log(error);
+            }) 
         },
         addNewCourse(){
             axios.post('https://localhost:44358/api/courses', this.course)
                 .then((result)=>{
                     console.log(result);
                     this.$emit('submit');
-                    this.coursesList.push({
-                        Name: this.course.Name
-                    });
+                    this.getAllCourses();
                     this.resetField();
                 })
                .catch(function (error) {
@@ -75,7 +79,5 @@ export default {
 </script>
 
 <style scoped>
-    .table th, .table td {
-        vertical-align: middle;
-    }
+@import '../assets/styles/tableStyle.css';
 </style>

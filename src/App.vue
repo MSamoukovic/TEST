@@ -14,7 +14,6 @@
 import StudentList from './components/StudentList.vue'
 import Courses from './components/Courses.vue'
 
-
 export default {
   name: 'App',
   components: {
@@ -23,3 +22,4 @@ export default {
   }
 }
 </script>
+

@@ -30,12 +30,11 @@ export default {
                     this.list.splice(this.index,1);
                 })
                 .catch(function (error) {
-                    console.log(this.item);
                     console.log(error);
                 })   
         },
         cancel : function(){
-        this.$emit('cancel') 
+            this.$emit('cancel') 
         }
     }
 }
